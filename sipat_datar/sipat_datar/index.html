@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sipat Datar — Pengolah Data Leveling</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2563eb">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png"></head><body><div class="app">
+<header><div><h1>YUDHA ADITSA PRATAMA SIPAT DATAR</h1><p class="sub">PENGAMBILAN DATA LAPANGAN</p></div><div>
+<button class="btn" style="background:#10b981" onclick="save()">💾 Simpan</button>
+<button class="btn" style="background:#f59e0b" onclick="openList()">📂 Buka</button>
+<button class="btn" style="background:#8b5cf6" onclick="exportCsv()">📊 Export CSV</button>
+<button class="btn" style="background:#06b6d4" onclick="$('file').click()">📥 Import CSV</button>
+<button class="btn" style="background:#ef4444" id="clr" onclick="clearAll()">🧹 Hapus Semua</button>
+<input type="file" id="file" accept=".csv" hidden onchange="importCsv(event)"></div></header>
+
+<section class="card"><h2>📋 Informasi Proyek</h2><div class="g">
+<div><label for="f-name">Nama Proyek</label><input id="f-name" placeholder="Contoh: Leveling Jalan Raya A"></div>
+<div><label for="f-date">Tanggal</label><input type="date" id="f-date"></div>
+<div><label for="f-sur">Surveyor</label><input id="f-sur" placeholder="Yudha Aditsa"></div>
+<div><label for="f-loc">Lokasi</label><input id="f-loc" placeholder="Lokasi pengukuran"></div></div></section>
+
+<section class="card"><h2>📍 Titik Awal (Benchmark)</h2><div class="g">
+<div><label for="f-sn">Nama Titik</label><input id="f-sn" placeholder="Contoh: BM01"></div>
+<div><label for="f-se">Elevasi (m)</label><input type="number" step="0.001" id="f-se" placeholder="Contoh: 137.356"></div></div></section>
+
+<section class="card"><h2>📊 Data Pengukuran <button class="btn" style="background:#2563eb;margin:0;font-size:.85rem" onclick="add()">+ Tambah Slag</button></h2>
+<div class="wrap"><table><thead><tr><th>No Titik</th><th>Elevasi (m)</th><th>No Slag</th><th>Status Bacaan</th><th>Kor. BT (m)</th><th>Arah Tembakan</th><th>Sikap Rambu</th><th>BA (mm)</th><th>BB (mm)</th><th>BT (mm)</th><th>ΔH (mm)</th><th>Jarak (m)</th><th>Jarak Total (m)</th><th>&lt;2%</th><th>Aksi</th></tr></thead><tbody id="tb"></tbody></table>
+<div id="empty" hidden>Belum ada data. Klik <b>"+ Tambah Slag"</b> untuk mulai menambah data pengukuran.</div></div>
+<p class="note">Jarak = (BA − BB) × 100. ΔH = BT belakang − BT muka. Kor. BT = ½(BA+BB) − BT; Sikap Rambu "TEGAK" bila |BA+BB−2BT| ≤ 2 mm. Kolom &lt;2% = selisih jarak belakang–muka terhadap jarak rata-rata.</p></section>
+
+<section class="card"><h2>📈 Ringkasan Hasil</h2><div class="g" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+<div class="k"><span>Total Slag</span><b id="s-n">0</b></div><div class="k"><span>Total ΔH</span><b id="s-dh">- mm</b></div>
+<div class="k"><span>Total Jarak</span><b id="s-d">0.0 m</b></div><div class="k hl"><span>Elevasi Akhir (Hitung)</span><b id="s-e">— m</b></div></div>
+<hr><h2 style="border:0;margin-bottom:10px;font-size:.9rem">Uji Standar SNI 19-6988-2004</h2><div class="g">
+<div><label for="f-kelas">Kelas Pengukuran</label><select id="f-kelas"></select></div>
+<div><label for="f-mode">Mode Penutup</label><select id="f-mode"><option value="ikat">Sekali jalan, ikat ke titik akhir</option><option value="pp">Pergi-pulang (kembali ke titik awal)</option></select></div>
+<div><label for="f-ee">Elevasi Titik Akhir (m)</label><input type="number" step="0.001" id="f-ee" placeholder="Elevasi BM akhir"></div>
+<div class="k"><span>Salah Penutup (f)</span><b id="s-f">- mm</b></div><div class="k"><span>Toleransi c√D</span><b id="s-t">- mm</b></div></div>
+<p class="note" id="s-st"></p></section>
+<footer>Sipat Datar v1.0 — Software Pengolah Data Leveling © 2026</footer></div>
+<dialog id="dlg"><div id="dc"></div><p style="text-align:right;margin:12px 0 0"><button class="btn" style="background:#64748b" onclick="dg.close()">Tutup</button></p></dialog>
+<script src="utils.js"></script>
+<script src="app.js"></script>
+<script>
+// PWA: daftarkan service worker agar bisa di-install dan dipakai offline (butuh https:// atau localhost)
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(err => console.log("ServiceWorker gagal:", err));
+  });
+}
+</script></body></html>
