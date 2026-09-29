@@ -1,8 +1,6 @@
 SIPAT DATAR - Pengolah Data Leveling (mengacu SNI 19-6988-2004)
 
-CARA PAKAI
-1. Ekstrak zip, lalu buka index.html di browser. Atau upload semua file ke repo GitHub Pages.
-2. Mode install/offline (PWA) hanya aktif lewat https:// atau localhost (mis. GitHub Pages), bukan file://.
+*Mode install/offline (PWA) hanya aktif lewat https:// atau localhost (mis. GitHub Pages), bukan file://.
 
 STRUKTUR
 index.html    kerangka halaman (kartu, tabel, dialog)
